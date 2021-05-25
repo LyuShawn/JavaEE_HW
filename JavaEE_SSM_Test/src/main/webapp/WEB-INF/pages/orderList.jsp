@@ -123,7 +123,7 @@
                 layout="prev, pager, next"
                 page-size="pageSize"
                 :current-page="currentPage"
-                :total="orderList.length"
+                :total="orderNum"
                 @current-change="currentChange">
         </el-pagination>
     </div>
@@ -190,6 +190,12 @@
                 this.$message.error('发货失败');
             },
 
+            currentChange(pageIndex){
+                var _this=this;
+                var newURL=window.location.origin+"/order/get_list/"+pageIndex+"/"+_this.pageSize;
+                window.location.href=newURL;
+            },
+
             //金额格式化函数
             number_format(number, decimals, dec_point, thousands_sep) {
             /*
@@ -226,8 +232,10 @@
         mounted(){
             let _this=this;
             let list=${orderList}
-            _this.pageSize=${pageSize};
+            this.pageSize=${pageSize};
+            console.log(this.pageSize);
             this.currentPage=${currentPage};
+            console.log(this.currentPage);
             for(let i=0;i<list.length;i++){
                 list[i].amount='￥'+_this.number_format(list[i].amount);
                 if(list[i].status==='waitConfirm'){

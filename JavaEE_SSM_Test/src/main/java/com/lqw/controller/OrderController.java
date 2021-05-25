@@ -37,8 +37,8 @@ public class OrderController {
         }
         List<Order> OrderList=orderService.getOrderList(page,limit);
         request.setAttribute("orderList",JSON.toJSON(OrderList));
-        request.setAttribute("currentPage",page);
-        request.setAttribute("pageSize",limit);
+        request.setAttribute("currentPage",page.intValue());
+        request.setAttribute("pageSize",limit.intValue());
         return "orderList";
         //return JSON.toJSONString(OrderList);
     }
