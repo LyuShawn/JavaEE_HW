@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：命名空间，用于隔离sql，还有一个很重要的作用，后面会讲 -->
+<mapper namespace="com.lqw.dao.OrderDao">
+    <select id="getOrderList" resultMap="orderMap">
+        select o.*,u.name as userName,oi.id as oid,oi.number as number,
+               p.promotePrice as amount,p.name as itemName
+        from `order` as o,`user` as u,orderitem as oi,product as p
+        where o.uid=u.id and o.id=oi.oid and oi.pid=p.id
+        limit  #{start} ,#{limit};
+    </select>
+
+    <resultMap id="orderMap" type="com.lqw.pojo.Order">
+        <id column="id" property="id"/>
+        <result column="orderCode" property="orderCode"/>
+        <result column="address" property="address"/>
+        <result column="post" property="post"/>
+        <result column="receiver" property="receiver"/>
+        <result column="mobile" property="mobile"/>
+        <result column="userMessage" property="userMessage"/>
+        <result column="createDate" property="createDate"/>
+        <result column="payDate" property="payDate"/>
+        <result column="deliveryDate" property="deliveryDate"/>
+        <result column="confirmDate" property="confirmDate"/>
+        <result column="userName" property="userName"/>
+        <result column="status" property="status"/>
+
+        <collection property="orderItems" ofType="com.lqw.pojo.OrderItem">
+            <id column="oid" property="id"/>
+            <result column="number" property="number"/>
+            <result column="amount" property="itemAmount"/>
+            <result column="itemName" property="itemName"/>
+        </collection>
+    </resultMap>
+    <select id="getOrderNum" resultType="Integer">
+        select count(*) from `order`;
+    </select>
+
+    <update id="deliverById">
+        update `order` set status='waitConfirm'
+        where id=#{id}
+    </update>
+</mapper>
