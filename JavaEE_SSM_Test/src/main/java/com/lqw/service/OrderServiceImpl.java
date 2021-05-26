@@ -24,6 +24,7 @@ public class OrderServiceImpl implements OrderService{
         List<Order> OrderList=orderDao.getOrderList((page-1)*limit,limit);
         int productNum;
         double amount;
+        //计算购买总数和金额
         for (Order order : OrderList) {
             productNum=0;
             amount=0;
@@ -32,11 +33,10 @@ public class OrderServiceImpl implements OrderService{
                 amount+=orderItem.getNumber()*orderItem.getItemAmount();
             }
             order.setProductNum(productNum);
-            order.setAmount(amount);//保留两位小数
+            order.setAmount(amount);
         }
         return OrderList;
     }
-
 
     @Override
     public int getOrderNum() {

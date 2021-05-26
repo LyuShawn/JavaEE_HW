@@ -40,7 +40,6 @@ public class OrderController {
         request.setAttribute("currentPage",page.intValue());
         request.setAttribute("pageSize",limit.intValue());
         return "orderList";
-        //return JSON.toJSONString(OrderList);
     }
 
     @RequestMapping("/deliver_by_id")

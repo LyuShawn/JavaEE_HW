@@ -164,6 +164,8 @@
                 })
                 $table.toggleRowExpansion(row)
             },
+
+            //发货函数
             deliver(row){
                 let _this=this;
                 console.log(row);
@@ -190,6 +192,7 @@
                 this.$message.error('发货失败');
             },
 
+            //分页
             currentChange(pageIndex){
                 var _this=this;
                 var newURL=window.location.origin+"/order/get_list/"+pageIndex+"/"+_this.pageSize;
@@ -198,13 +201,6 @@
 
             //金额格式化函数
             number_format(number, decimals, dec_point, thousands_sep) {
-            /*
-            　　 * 参数说明：
-            　　 * number：要格式化的数字
-            　　 * decimals：保留几位小数
-            　　 * dec_point：小数点符号
-            　　 * thousands_sep：千分位符号
-            　　 * */
             number = (number + '').replace(/[^0-9+-Ee.]/g, '');
             var n = !isFinite(+number) ? 0 : +number,
                 prec = !isFinite(+decimals) ? 2 : Math.abs(decimals),
